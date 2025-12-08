@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProfRates - Rating Questions</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: #f5f5f7;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: linear-gradient(180deg, #7c3aed 0%, #6b21a8 100%);
+            color: white;
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 40px;
+        }
+
+        .logo-icon {
+            width: 42px;
+            height: 42px;
+            background: rgba(255, 255, 255, 0.25);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+        }
+
+        .logo-text h1 {
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .logo-text p {
+            font-size: 13px;
+            opacity: 0.8;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+
+        .user-avatar {
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .user-details h3 {
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .user-details p {
+            font-size: 13px;
+            opacity: 0.8;
+        }
+
+        .nav-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex: 1;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: 10px;
+            color: white;
+            text-decoration: none;
+            font-size: 15px;
+            transition: background 0.2s;
+        }
+
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-item.active {
+            background: white;
+            color: #7c3aed;
+            font-weight: 600;
+        }
+
+        .nav-icon {
+            font-size: 20px;
+            width: 24px;
+            text-align: center;
+        }
+
+        .sidebar-footer {
+            margin-top: auto;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            font-size: 13px;
+            opacity: 0.7;
+            text-align: center;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 280px;
+            flex: 1;
+            padding: 30px 40px;
+        }
+
+        .header {
+            margin-bottom: 35px;
+        }
+
+        .header-title h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 5px;
+        }
+
+        .header-title p {
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* Management Section */
+        .management-section {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            margin-bottom: 20px;
+        }
+
+        .section-header {
+            margin-bottom: 30px;
+        }
+
+        .section-title h2 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 5px;
+        }
+
+        .section-title p {
+            font-size: 13px;
+            color: #666;
+        }
+
+        /* Info Banner */
+        .info-banner {
+            background: #eff6ff;
+            border-left: 4px solid #7c3aed;
+            padding: 16px 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            display: flex;
+            gap: 12px;
+        }
+
+        .info-icon {
+            width: 22px;
+            height: 22px;
+            border: 2px solid #7c3aed;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #7c3aed;
+            font-size: 14px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .info-content p {
+            font-size: 14px;
+            color: #1a1a1a;
+            line-height: 1.6;
+            margin-bottom: 4px;
+        }
+
+        .info-subtext {
+            font-size: 13px;
+            color: #666;
+        }
+
+        /* Category Section */
+        .category-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            margin-bottom: 20px;
+        }
+
+        .category-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .category-title-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .category-title-group h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        .question-count {
+            font-size: 13px;
+            color: #666;
+            margin-top: 4px;
+        }
+
+        .category-actions {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .add-question-btn {
+            background: #7c3aed;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.2s;
+        }
+
+        .add-question-btn:hover {
+            background: #6d28d9;
+        }
+
+        .delete-category-btn {
+            background: none;
+            border: 1px solid #fee2e2;
+            color: #dc2626;
+            padding: 10px 14px;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .delete-category-btn:hover {
+            background: #fef2f2;
+        }
+
+        /* Question Item */
+        .question-item {
+            background: #fafafa;
+            border: 1px solid #e5e5e5;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .question-text {
+            display: flex;
+            gap: 10px;
+            flex: 1;
+        }
+
+        .question-number {
+            font-size: 15px;
+            font-weight: 600;
+            color: #666;
+            min-width: 25px;
+        }
+
+        .question-content {
+            font-size: 15px;
+            color: #1a1a1a;
+            line-height: 1.5;
+        }
+
+        .question-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .action-btn {
+            background: white;
+            border: 1px solid #e5e5e5;
+            color: #666;
+            padding: 8px 10px;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .action-btn:hover {
+            background: #f9fafb;
+            border-color: #d1d5db;
+            color: #1a1a1a;
+        }
+
+        .action-btn.delete:hover {
+            background: #fef2f2;
+            border-color: #fecaca;
+            color: #dc2626;
+        }
+
+        /* Rating Scale */
+        .rating-scale {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .rating-label {
+            font-size: 13px;
+            color: #666;
+            font-weight: 600;
+        }
+
+        .scale-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .scale-btn {
+            width: 38px;
+            height: 38px;
+            background: white;
+            border: 1px solid #e5e5e5;
+            border-radius: 8px;
+            color: #666;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .scale-btn:hover {
+            border-color: #7c3aed;
+            color: #7c3aed;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo">
+            <div class="logo-icon">
+                <i class="fas fa-star"></i>
+            </div>
+            <div class="logo-text">
+                <h1>ProfRates</h1>
+                <p>Ադմին պորտալ</p>
+            </div>
+        </div>
+
+        <div class="user-info">
+            <div class="user-avatar">AD</div>
+            <div class="user-details">
+                <h3>Admin User</h3>
+                <p>admin@profrates.am</p>
+            </div>
+        </div>
+
+        <nav class="nav-menu">
+            <a href="dashboard_arm.html" class="nav-item">
+                <span class="nav-icon"><i class="fas fa-th-large"></i></span>
+                <span>Վահանակ</span>
+            </a>
+            <a href="users_arm.html" class="nav-item">
+                <span class="nav-icon"><i class="fas fa-users"></i></span>
+                <span>Օգտատերեր</span>
+            </a>
+            <a href="professors_arm.html" class="nav-item">
+                <span class="nav-icon"><i class="fas fa-graduation-cap"></i></span>
+                <span>Դասախոսներ</span>
+            </a>
+            <a href="ratings&reviews_arm.html" class="nav-item">
+                <span class="nav-icon"><i class="fas fa-star"></i></span>
+                <span>Գնահատականներ և Կարծիքներ</span>
+            </a>
+            <a href="#" class="nav-item active">
+                <span class="nav-icon"><i class="fas fa-clipboard-list"></i></span>
+                <span>Ռեյթինգի Հարցեր</span>
+            </a>
+            <a href="ActivityLogs_arm.html" class="nav-item">
+                <span class="nav-icon"><i class="fas fa-chart-line"></i></span>
+                <span>Գործողությունների Պատմություն</span>
+            </a>
+            <a href="ResetPassword_arm.html" class="nav-item">
+                <span class="nav-icon"><i class="fas fa-key"></i></span>
+                <span>Վերականգնել Գաղտնաբառը</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            © 2025 ProfRates<br>
+            Ադմին պորտալ v1.0
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="header">
+            <div class="header-title">
+                <h1>Ռեյթինգի Հարցեր</h1>
+                <p>Կառավարեք ձեր պորտալը</p>
+            </div>
+        </div>
+
+        <!-- Rating Questions Management Section -->
+        <div class="management-section">
+            <div class="section-header">
+                <div class="section-title">
+                    <h2>Ռեյթինգի Հարցերի Կառավարում</h2>
+                    <p>Կառավարել հարցերը, որոնք ուսանողները օգտագործում են դասախոսներին գնահատելու համար (1-5 սանդղակ)</p>
+                </div>
+            </div>
+
+            <!-- Info Banner -->
+            <div class="info-banner">
+                <div class="info-icon">i</div>
+                <div class="info-content">
+                    <p><strong>Ուսանողները կգնահատեն դասախոսներին օգտագործելով այս հարցերը 1-5 սանդղակով։</strong></p>
+                    <p class="info-subtext">Բեռնել JSON ֆայլը՝ տվյալների բազայի ինտեգրման backend մշակողներին տրամադրելու համար:</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Teaching Quality Category -->
+        <div class="category-card">
+            <div class="category-header">
+                <div>
+                    <div class="category-title-group">
+                        <h3>Ուսուցման Որակ</h3>
+                        <span class="status-badge">Ակտիվ</span>
+                    </div>
+                    <p class="question-count">4 հարց</p>
+                </div>
+                <div class="category-actions">
+                    <button class="add-question-btn">
+                        <i class="fas fa-plus"></i>
+                        <span>Ավելացնել Հարց</span>
+                    </button>
+                    <button class="delete-category-btn">
+                        <i class="far fa-trash-alt"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Question 1 -->
+            <div class="question-item">
+                <div class="question-header">
+                    <div class="question-text">
+                        <span class="question-number">1.</span>
+                        <span class="question-content">Որքանո՞վ է դասախոսը հստակ բացատրում հասկացությունները։</span>
+                    </div>
+                    <div class="question-actions">
+                        <button class="action-btn">
+                            <i class="fas fa-arrow-up"></i>
+                        </button>
+                        <button class="action-btn">
+                            <i class="fas fa-arrow-down"></i>
+                        </button>
+                        <button class="action-btn">
+                            <i class="far fa-edit"></i>
+                        </button>
+                        <button class="action-btn delete">
+                            <i class="far fa-trash-alt"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="rating-scale">
+                    <span class="rating-label">Ռեյթինգի Սանդղակ:</span>
+                    <div class="scale-buttons">
+                        <button class="scale-btn">1</button>
+                        <button class="scale-btn">2</button>
+                        <button class="scale-btn">3</button>
+                        <button class="scale-btn">4</button>
+                        <button class="scale-btn">5</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="question-item">
+                <div class="question-header">
+                    <div class="question-text">
+                        <span class="question-number">2.</span>
+                        <span class="question-content">Որքանո՞վ են հետաքրքիր դասախոսությունները։</span>
+                    </div>
+                    <div class="question-actions">
+                        <button class="action-btn">
+                            <i class="fas fa-arrow-up"></i>
+                        </button>
+                        <button class="action-btn">
+                            <i class="fas fa-arrow-down"></i>
+                        </button>
+                        <button class="action-btn">
+                            <i class="far fa-edit"></i>
+                        </button>
+                        <button class="action-btn delete">
+                            <i class="far fa-trash-alt"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="rating-scale">
+                    <span class="rating-label">Ռեյթինգի Սանդղակ:</span>
+                    <div class="scale-buttons">
+                        <button class="scale-btn">1</button>
+                        <button class="scale-btn">2</button>
+                        <button class="scale-btn">3</button>
+                        <button class="scale-btn">4</button>
+                        <button class="scale-btn">5</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 3 -->
+            <div class="question-item">
+                <div class="question-header">
+                    <div class="question-text">
+                        <span class="question-number">3.</span>
+                        <span class="question-content">Որքանո՞վ է դասախոսը պատասխանում ուսանողների հարցերին։</span>
+                    </div>
+                    <div class="question-actions">
+                        <button class="action-btn">
+                            <i class="fas fa-arrow-up"></i>
+                        </button>
+                        <button class="action-btn">
+                            <i class="fas fa-arrow-down"></i>
+                        </button>
+                        <button class="action-btn">
+                            <i class="far fa-edit"></i>
+                        </button>
+                        <button class="action-btn delete">
+                            <i class="far fa-trash-alt"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="rating-scale">
+                    <span class="rating-label">Ռեյթինգի Սանդղակ:</span>
+                    <div class="scale-buttons">
+                        <button class="scale-btn">1</button>
+                        <button class="scale-btn">2</button>
+                        <button class="scale-btn">3</button>
+                        <button class="scale-btn">4</button>
+                        <button class="scale-btn">5</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 4 -->
+            <div class="question-item">
+                <div class="question-header">
+                    <div class="question-text">
+                        <span class="question-number">4.</span>
+                        <span class="question-content">Որքանո՞վ է դասախոսը գիտակ իրենց առարկայի մեջ։</span>
+                    </div>
+                    <div class="question-actions">
+                        <button class="action-btn">
+                            <i class="fas fa-arrow-up"></i>
+                        </button>
+                        <button class="action-btn">
+                            <i class="fas fa-arrow-down"></i>
+                        </button>
+                        <button class="action-btn">
+                            <i class="far fa-edit"></i>
+                        </button>
+                        <button class="action-btn delete">
+                            <i class="far fa-trash-alt"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="rating-scale">
+                    <span class="rating-label">Ռեյթինգի Սանդղակ:</span>
+                    <div class="scale-buttons">
+                        <button class="scale-btn">1</button>
+                        <button class="scale-btn">2</button>
+                        <button class="scale-btn">3</button>
+                        <button class="scale-btn">4</button>
+                        <button class="scale-btn">5</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Course Organization Category -->
+        <div class="category-card">
+            <div class="category-header">
+                <div>
+                    <div class="category-title-group">
+                        <h3>Դասընթացի կազմակերպում</h3>
+                        <span class="status-badge">Ակտիվ</span>
+                    </div>
+                    <p class="question-count">3 հարց</p>
+                </div>
+                <div class="category-actions">
+                    <button class="add-question-btn">
+                        <i class="fas fa-plus"></i>
+                        <span>Ավելացնել Հարցեր</span>
+                    </button>
+                    <button class="delete-category-btn">
+                        <i class="far fa-trash-alt"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Question 1 -->
+            <div class="question-item">
+                <div class="question-header">
+                    <div class="question-text">
+                        <span class="question-number">1.</span>
+                        <span class="question-content">Որքանո՞վ է լավ կազմակերպված դասընթացի նյութը:</span>
+                    </div>
+                    <div class="question-actions">
+                        <button class="action-btn">
+                            <i class="fas fa-arrow-up"></i>
+                        </button>
+                        <button class="action-btn">
+                            <i class="fas fa-arrow-down"></i>
+                        </button>
+                        <button class="action-btn">
+                            <i class="far fa-edit"></i>
+                        </button>
+                        <button class="action-btn delete">
+                            <i class="far fa-trash-alt"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="rating-scale">
+                    <span class="rating-label">Ռեյթինգի Սանդղակ:</span>
+                    <div class="scale-buttons">
+                        <button class="scale-btn">1</button>
+                        <button class="scale-btn">2</button>
+                        <button class="scale-btn">3</button>
+                        <button class="scale-btn">4</button>
+                        <button class="scale-btn">5</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="question-item">
+                <div class="question-header">
+                    <div class="question-text">
+                        <span class="question-number">2.</span>
+                        <span class="question-content">Որքա՞ն են հստակ հանձնարարական հրահանգները։</span>
+                    </div>
+                    <div class="question-actions">
+                        <button class="action-btn">
+                            <i class="fas fa-arrow-up"></i>
+                        </button>
+                        <button class="action-btn">
+                            <i class="fas fa-arrow-down"></i>
+                        </button>
+                        <button class="action-btn">
+                            <i class="far fa-edit"></i>
+                        </button>
+                        <button class="action-btn delete">
+                            <i class="far fa-trash-alt"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="rating-scale">
+                    <span class="rating-label">Ռեյթինգի Սանդղակ:</span>
+                    <div class="scale-buttons">
+                        <button class="scale-btn">1</button>
+                        <button class="scale-btn">2</button>
+                        <button class="scale-btn">3</button>
+                        <button class="scale-btn">4</button>
+                        <button class="scale-btn">5</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 3 -->
+            <div class="question-item">
+                <div class="question-header">
+                    <div class="question-text">
+                        <span class="question-number">3.</span>
+                        <span class="question-content">Որքանո՞վ է ողջամիտ ծանրաբեռնվածությունը։</span>
+                    </div>
+                    <div class="question-actions">
+                        <button class="action-btn">
+                            <i class="fas fa-arrow-up"></i>
+                        </button>
+                        <button class="action-btn">
+                            <i class="fas fa-arrow-down"></i>
+                        </button>
+                        <button class="action-btn">
+                            <i class="far fa-edit"></i>
+                        </button>
+                        <button class="action-btn delete">
+                            <i class="far fa-trash-alt"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="rating-scale">
+                    <span class="rating-label">Ռեյթինգի Սանդղակ:</span>
+                    <div class="scale-buttons">
+                        <button class="scale-btn">1</button>
+                        <button class="scale-btn">2</button>
+                        <button class="scale-btn">3</button>
+                        <button class="scale-btn">4</button>
+                        <button class="scale-btn">5</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Assessment & Grading Category -->
+        <div class="category-card">
+            <div class="category-header">
+                <div>
+                    <div class="category-title-group">
+                        <h3>Վերլուծություն և Գնահատում</h3>
+                        <span class="status-badge">Ակտիվ</span>
+                    </div>
+                    <p class="question-count">3 հարց</p>
+                </div>
+                <div class="category-actions">
+                    <button class="add-question-btn">
+                        <i class="fas fa-plus"></i>
+                        <span>Ավելացնել Հարց</span>
+                    </button>
+                    <button class="delete-category-btn">
+                        <i class="far fa-trash-alt"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Question 1 -->
+            <div class="question-item">
+                <div class="question-header">
+                    <div class="question-text">
+                        <span class="question-number">1.</span>
+                        <span class="question-content">Որքանո՞վ է արդար գնահատականը։</span>
+                    </div>
+                    <div class="question-actions">
+                        <button class="action-btn">
+                            <i class="fas fa-arrow-up"></i>
+                        </button>
+                        <button class="action-btn">
+                            <i class="fas fa-arrow-down"></i>
+                        </button>
+                        <button class="action-btn">
+                            <i class="far fa-edit"></i>
+                        </button>
+                        <button class="action-btn delete">
+                            <i class="far fa-trash-alt"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="rating-scale">
+                    <span class="rating-label">Ռեյթինգի Սանդղակ:</span>
+                    <div class="scale-buttons">
+                        <button class="scale-btn">1</button>
+                        <button class="scale-btn">2</button>
+                        <button class="scale-btn">3</button>
+                        <button class="scale-btn">4</button>
+                        <button class="scale-btn">5</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="question-item">
+                <div class="question-header">
+                    <div class="question-text">
+                        <span class="question-number">2.</span>
+                        <span class="question-content">Որքանո՞վ է ժամանակին առաջադրանքների վերաբերյալ հետադարձ կապը:</span>
+                    </div>
+                    <div class="question-actions">
+                        <button class="action-btn">
+                            <i class="fas fa-arrow-up"></i>
+                        </button>
+                        <button class="action-btn">
+                            <i class="fas fa-arrow-down"></i>
+                        </button>
+                        <button class="action-btn">
+                            <i class="far fa-edit"></i>
+                        </button>
+                        <button class="action-btn delete">
+                            <i class="far fa-trash-alt"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="rating-scale">
+                    <span class="rating-label">Ռեյթինգի Սանդղակ:</span>
+                    <div class="scale-buttons">
+                        <button class="scale-btn">1</button>
+                        <button class="scale-btn">2</button>
+                        <button class="scale-btn">3</button>
+                        <button class="scale-btn">4</button>
+                        <button class="scale-btn">5</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 3 -->
+            <div class="question-item">
+                <div class="question-header">
+                    <div class="question-text">
+                        <span class="question-number">3.</span>
+                        <span class="question-content">Որքանո՞վ են քննությունները արտացոլում դասընթացի բովանդակությունը:</span>
+                    </div>
+                    <div class="question-actions">
+                        <button class="action-btn">
+                            <i class="fas fa-arrow-up"></i>
+                        </button>
+                        <button class="action-btn">
+                            <i class="fas fa-arrow-down"></i>
+                        </button>
+                        <button class="action-btn">
+                            <i class="far fa-edit"></i>
+                        </button>
+                        <button class="action-btn delete">
+                            <i class="far fa-trash-alt"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="rating-scale">
+                    <span class="rating-label">Ռեյթինգի Սանդղակ:</span>
+                    <div class="scale-buttons">
+                        <button class="scale-btn">1</button>
+                        <button class="scale-btn">2</button>
+                        <button class="scale-btn">3</button>
+                        <button class="scale-btn">4</button>
+                        <button class="scale-btn">5</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

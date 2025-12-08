@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Login</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      height: 100%;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #F5F5FF;
+    }
+
+    .container {
+      display: flex;
+      height: 100vh;
+      width: 100%;
+    }
+
+    .left {
+      flex: 0 0 45%;
+      min-width: 500px;
+      padding: 50px 40px;
+      background-color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      position: relative;
+    }
+
+    .title {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .security img { width: 40px; height: 40px; }
+
+    .txt h1 { font-size: 28px; color: #4e3791; }
+
+    .txt p { font-size: 16px; font-weight: 500; color: #666; }
+
+    .left > p {
+      font-size: 14px;
+      color: #444;
+      margin: 20px 0 30px;
+      line-height: 1.6;
+    }
+
+    .actions { display: flex; flex-direction: column; gap: 20px; }
+
+    .feature {
+      display: flex;
+      align-items: center;           
+      gap: 12px;
+      background-color: #F1EFFF;
+      padding: 16px;
+      border-radius: 8px;
+      width: 100%;
+    }
+
+    .mark img { width: 24px; height: 24px; }
+
+    .feature p {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 600;
+      color: #2D2775;
+      line-height: 1.4;
+      flex: 1;                       
+    }
+
+    .feature span {
+      display: block;
+      font-size: 13px;
+      font-weight: 400;
+      color: #666;
+      margin-top: 4px;
+      line-height: 1.5;
+    }
+
+    .right {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;        
+      padding: 40px;                  
+    }
+
+    .form-container {
+      background: #fff;
+      border-radius: 16px;
+      padding: 48px 40px;
+      max-width: 520px;
+      width: 100%;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    }
+
+    .form-container h1 {
+      font-size: 32px;
+      color: #1a1a1a;
+      margin-bottom: 8px;
+      font-weight: 600;
+      text-align: left;
+    }
+
+    .p3 {
+      font-size: 15px;
+      color: #6b7280;
+      margin-bottom: 32px;
+      text-align: left;
+    }
+
+    .form { display: flex; flex-direction: column; }
+
+    .label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 8px;
+      margin-top: 16px;
+    }
+
+    .label:first-of-type { margin-top: 0; }
+
+    .mail, .pass {
+      width: 100%;
+      padding: 13px 16px;
+      padding-left: 44px;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      font-size: 15px;
+      color: #1a1a1a;
+      transition: all 0.2s;
+      background: #fafafa;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .mail:focus, .pass:focus {
+      outline: none;
+      border-color: #4e3791;         
+      background-color: #fff;
+      box-shadow: 0 0 0 2px rgba(78, 55, 145, 0.12);
+    }
+
+    .error {
+      font-size: 13px;
+      color: #d32f2f;
+      margin-top: 6px;
+    }
+
+    .lang-toggle {
+      position: absolute;
+      top: 20px;
+      left: 40px;
+      display: flex;
+      gap: 12px;
+    }
+
+    .lang-toggle a {
+      color: #4e3791;      
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .lang-toggle a:hover { text-decoration: underline; }
+
+    .submit {
+      margin-top: 25px;
+      width: 100%;
+      padding: 14px;
+      background: #4e3791;            
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .submit:hover {
+      background: #3a2b6d;          
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(78, 55, 145, 0.25);
+    }
+
+    @media (max-width: 768px) {
+      .container { flex-direction: column; }
+      .left, .right { flex: 1 1 100%; padding: 30px 20px; }
+      .left { min-width: auto; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="left">
+      <div class="lang-toggle">
+        <a href="Admin_login_eng.html" onclick="setLanguage('EN')">EN</a>
+        <a href="#" onclick="setLanguage('HY')">Հայ</a>
+      </div>
+      <div class="title">
+        <div class="security">
+          <img src="security.svg" alt="Security Icon">
+        </div>
+        <div class="txt">
+          <h1>ProfRates</h1>
+          <p>Ադմին պորտալ</p>
+        </div>  
+      </div>
+
+      <p>Կառավարեք ձեր դասախոսների գնահատման հարթակը հզոր գործիքներով և վերլուծություններով։</p>
+
+      <div class="actions">
+        <div class="feature">
+          <div class="mark"><img src="mark.svg" alt="Check Icon"></div>
+          <p>Անվտանգ մուտք
+            <span>Ձեր ադմին հաշվի ձեռնարկային անվտանգության մակարդակ</span>
+          </p>
+        </div>
+
+        <div class="feature">
+          <div class="mark"><img src="mark.svg" alt="Check Icon"></div>
+          <p>Լրիվ վերահսկողություն
+            <span>Կառավարեք օգտատերերին, դասախոսներին և գնահատականները հեշտությամբ</span>
+          </p>
+        </div>
+
+        <div class="feature">
+          <div class="mark"><img src="mark.svg" alt="Check Icon"></div>
+          <p>Իրական ժամանակի վերլուծություն
+            <span>Հետևեք հարթակի ակտիվությանը և ներգրավվածությանը</span>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="right">
+      <div class="form-container">
+        <h1>Բարի վերադարձ</h1>
+        <p class="p3">Մուտք գործեք ձեր ադմին հաշիվ</p>
+
+        <form class="form">
+          <label for="email" class="label">Էլ. հասցե</label>
+          <input type="email" id="email" class="mail" placeholder="Էլփոստ" />
+          <div id="email-error" class="error"></div>
+
+          <label for="password" class="label">Գաղտնաբառ</label>
+          <input type="password" id="password" class="pass" placeholder="••••••••" />
+          <div id="password-error" class="error"></div>
+
+          <button type="submit" class="submit">Մուտք</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script src="admin_arm.js"></script>
+</body>
+</html>
