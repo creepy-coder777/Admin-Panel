@@ -534,4 +534,29 @@
         </div>
     </div>
 </body>
+<script>
+    document.querySelector(".filter-dropdown").addEventListener("change", function () {
+  const filterValue = this.value.toLowerCase(); // "all reviews", "approved", "pending", "flagged"
+  const rows = document.querySelectorAll("table tbody tr");
+
+  rows.forEach((row) => {
+    const statusCell = row.querySelector(".status-badge");
+    if (!statusCell) return;
+
+    // Either use text or class name
+    const statusText = statusCell.textContent.toLowerCase();
+    const statusClass = statusCell.className.toLowerCase();
+
+    if (
+      filterValue === "all reviews" ||
+      statusText === filterValue ||
+      statusClass.includes(filterValue)
+    ) {
+      row.style.display = "";
+    } else {
+      row.style.display = "none";
+    }
+  });
+});
+</script>
 </html>

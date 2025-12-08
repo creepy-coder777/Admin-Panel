@@ -539,5 +539,35 @@
             </table>
         </div>
     </div>
+    <!-- Edit Professor Modal -->
+<div id="editProfessorModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.4); z-index:1000; justify-content:center; align-items:center;">
+  <div style="background:white; padding:30px; border-radius:12px; width:400px; box-shadow:0 4px 12px rgba(0,0,0,0.2);">
+    <h2 style="margin-bottom:20px; font-size:20px;">Խմբագրել Դասախոս</h2>
+    <label for="editProfessorName" style="font-weight:600; font-size:14px;">Անուն</label>
+    <input type="text" id="editProfessorName" style="width:100%; margin-bottom:16px; padding:10px; border-radius:8px; border:1px solid #ccc;" />
+    <label for="editProfessorEmail" style="font-weight:600; font-size:14px;">Էլփոստ / Բաժին</label>
+    <input type="email" id="editProfessorEmail" style="width:100%; margin-bottom:24px; padding:10px; border-radius:8px; border:1px solid #ccc;" />
+    <div style="display:flex; justify-content:flex-end; gap:10px;">
+      <button onclick="closeEditProfessorModal()" style="padding:10px 16px; background:#eee; border:none; border-radius:8px; cursor:pointer;">Չեղարկել</button>
+      <button onclick="saveProfessorEdit()" style="padding:10px 16px; background:#7c3aed; color:white; border:none; border-radius:8px; cursor:pointer;">Պահպանել</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add Professor Modal -->
+<div id="addProfessorModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.4); z-index:1000; justify-content:center; align-items:center;">
+  <div style="background:white; padding:30px; border-radius:12px; width:400px; box-shadow:0 4px 12px rgba(0,0,0,0.2);">
+    <h2 style="margin-bottom:20px; font-size:20px;">Ավելացնել Նոր Դասախոս</h2>
+    <label for="newProfessorName" style="font-weight:600; font-size:14px;">Անուն</label>
+    <input type="text" id="newProfessorName" style="width:100%; margin-bottom:16px; padding:10px; border-radius:8px; border:1px solid #ccc;" />
+    <label for="newProfessorEmail" style="font-weight:600; font-size:14px;">Էլփոստ / Բաժին</label>
+    <input type="email" id="newProfessorEmail" style="width:100%; margin-bottom:24px; padding:10px; border-radius:8px; border:1px solid #ccc;" />
+    <div style="display:flex; justify-content:flex-end; gap:10px;">
+      <button onclick="closeAddProfessorModal()" style="padding:10px 16px; background:#eee; border:none; border-radius:8px; cursor:pointer;">Չեղարկել</button>
+      <button onclick="saveNewProfessor()" style="padding:10px 16px; background:#7c3aed; color:white; border:none; border-radius:8px; cursor:pointer;">Պահպանել</button>
+    </div>
+  </div>
+</div>
 </body>
+<script src="js_folder/professors_arm.js"></script>
 </html>
