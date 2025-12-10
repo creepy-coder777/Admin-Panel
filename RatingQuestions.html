@@ -899,5 +899,26 @@
             </div>
         </div>
     </div>
+    <!-- Add Question Modal -->
+<div id="addQuestionModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.4); z-index:1000; justify-content:center; align-items:center;">
+  <div style="background:white; padding:30px; border-radius:16px; width:480px; box-shadow:0 4px 12px rgba(0,0,0,0.2);">
+    <h2 style="font-size:20px; margin-bottom:20px;">Add New Question</h2>
+    <label for="questionText" style="font-weight:600; font-size:14px;">Question Text</label>
+    <input type="text" id="questionText" placeholder="e.g., How clearly does the professor explain concepts?" style="width:100%; margin:12px 0 20px; padding:12px; border-radius:10px; border:1px solid #ccc; font-size:14px;" />
+    <p style="font-size:13px; color:#666; margin-bottom:12px;">Students will rate using:</p>
+    <div style="display:flex; gap:8px; margin-bottom:24px;">
+      <button class="scale-btn">1</button>
+      <button class="scale-btn">2</button>
+      <button class="scale-btn">3</button>
+      <button class="scale-btn">4</button>
+      <button class="scale-btn">5</button>
+    </div>
+    <div style="display:flex; justify-content:flex-end; gap:10px;">
+      <button onclick="closeAddQuestionModal()" style="padding:10px 16px; background:#eee; border:none; border-radius:8px; cursor:pointer;">Cancel</button>
+      <button onclick="saveNewQuestion()" style="padding:10px 16px; background:#7c3aed; color:white; border:none; border-radius:8px; cursor:pointer;">Add Question</button>
+    </div>
+  </div>
+</div>
 </body>
+<script src="js_folder/questions_eng.js"></script>
 </html>
